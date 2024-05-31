@@ -22,7 +22,7 @@ $addLeadCustomFormPermission = user()->permission('manage_lead_custom_forms');
         <div class="d-grid d-lg-flex d-md-flex action-bar">
             <div id="table-actions" class="flex-grow-1 align-items-center">
                 @if ($addLeadPermission == 'all' || $addLeadPermission == 'added')
-                    <x-forms.button-primary class="mr-3 float-left mb-2 mb-lg-0 mb-md-0" icon="plus">
+                    <x-forms.button-primary class="mr-3 float-left mb-2 mb-lg-0 mb-md-0" icon="plus" id="clientvendor">
                         @lang('modules.leadContact.addLeadContact')
                     </x-forms.button-primary>
                 @endif
@@ -58,6 +58,39 @@ $addLeadCustomFormPermission = user()->permission('manage_lead_custom_forms');
             {!! $dataTable->table(['class' => 'table table-hover border-0 w-100']) !!}
 
         </div>
+            <div class="modal fade" id="ajaxModel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeading">Select Entity</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group my-3">
+                                
+                                    <div class="d-flex">
+                                        <x-forms.radio fieldId="requester-client" :fieldLabel="__('modules.modal.client')"
+                                                           fieldName="requester_type" fieldValue="client"
+                                                           checked="true">
+                                        </x-forms.radio>
+                                        <x-forms.radio fieldId="requester-vendor" :fieldLabel="__('modules.modal.vendor')"
+                                                           fieldValue="vendor"
+                                                           fieldName="requester_type">
+                                        </x-forms.radio>
+                                    </div>
+                            </div>
+        
+                        </div>
+                        <div class=" modal-footer">
+                                    <x-forms.link-primary :link="route('lead-contact.create')" class="px-3" openRightModal>
+                                        @lang('modules.modal.next')
+                                    </x-forms.link-primary>
+                                    <x-forms.button-secondary id="cancel">
+                                        @lang('modules.modal.cancel')
+                                    </x-forms.button-secondary>
+                        </div>
+                    </div>
+                </div>
+             </div>
         <!-- Task Box End -->
     </div>
     <!-- CONTENT WRAPPER END -->
@@ -68,6 +101,12 @@ $addLeadCustomFormPermission = user()->permission('manage_lead_custom_forms');
     @include('sections.datatable_js')
 
     <script>
+         $('#clientvendor').click(function () {
+            $('#ajaxModel').modal('show');
+         });
+         $('#cancel').click(function () {
+            $('#ajaxModel').modal('hide');
+         });
         $('#lead-contact-table').on('preXhr.dt', function(e, settings, data) {
 
             var dateRangePicker = $('#datatableRange').data('daterangepicker');

@@ -2225,4 +2225,10 @@ return array(
         'dealAgent' => 'Deal Agent',
         'profile' => 'Agent report',
     ),
+    'modal'=>array(
+        'client' => 'Client',
+        'vendor' => 'Vendor',
+        'cancel' => 'Cancel',
+        'next' => 'Next'
+    ),
 );
